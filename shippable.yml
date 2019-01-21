@@ -8,18 +8,17 @@ runtime:
   nodePool: custom__aarch64__Ubuntu_16_04
   
 services:
-  #- cassandra 
-  - couchdb 
-  - elasticsearch 
-  - memcached 
-  - mongodb 
+  - couchdb #1.6.0
+  - elasticsearch #6.2.4
+  - memcached #1.4.25 
+  - mongodb #4.0.1 
   #- mysql 
   #- neo4j 
-  - postgres 
-  - rabbitmq 
-  - redis  
+  - postgres #9.5 
+  - rabbitmq #3.6.15 
+  - redis  #4.0.11 
  # - riak 
-  - selenium 
+  - selenium #3.14.0 
   - sqlite
   
 build:
@@ -37,29 +36,27 @@ build:
     - echo SHIPPABLE_ES_BINARY=$SHIPPABLE_ES_BINARY
     - echo SHIPPABLE_MEMCACHED_BINARY=$SHIPPABLE_MEMCACHED_BINARY
     - echo SHIPPABLE_MONGODB_BINARY=$SHIPPABLE_MONGODB_BINARY
-    #- echo SHIPPABLE_NEO4J_BINARY=$SHIPPABLE_NEO4J_BINARY
     - echo SHIPPABLE_POSTGRES_BINARY=$SHIPPABLE_POSTGRES_BINARY
     - echo SHIPPABLE_RABBITMQ_BINARY=$SHIPPABLE_RABBITMQ_BINARY
     - echo SHIPPABLE_REDIS_BINARY=$SHIPPABLE_REDIS_BINARY
     - echo SHIPPABLE_SELENIUM_v=$SHIPPABLE_SELENIUM_BINARY    
     - echo SHIPPABLE_SQLITE_BINARY=$SHIPPABLE_SQLITE_BINARY
 
-    - memcached -V
-    - psql --version
-    - redis-server -v
+    - memcached -V #1.4.25 
+    - psql --version #9.5 
+    - redis-server -v #4.0.11 
     - which sqlite3 #|| true
     - java -jar /usr/local/selenium/selenium-server-standalone-3.14.0.jar --version
     - sqlite3 --version
-    - elasticsearch --version
+    - elasticsearch --version ##6.2.4
     - sudo -i -u couchdb /opt/couchdb/bin/couchdb 2>&1 >/dev/null &
     - sleep 5
-    - curl http://127.0.0.1:5984/
-    - dpkg -s rabbitmq-server | grep  Version
-    - mongod --version 
-    #- /var/lib/neo4j/bin/neo4j version
-    
+    - curl http://127.0.0.1:5984/ #1.6.0
+    - dpkg -s rabbitmq-server | grep  Version #3.6.15 
+    - mongod --version #4.0.1     
     - python --version
-        
+    - docker pull shippabledocker/sample_node_pvt:ecr
+     
 integrations:
     
   hub:
